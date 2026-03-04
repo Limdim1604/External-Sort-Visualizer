@@ -1,0 +1,5 @@
+node_modules/
+renderer/dist/
+dist_electron/
+*.log
+.DS_Store

@@ -1,0 +1,53 @@
+{
+  "name": "external-sort-visualizer",
+  "version": "1.0.0",
+  "main": "main/main.js",
+  "scripts": {
+    "dev:vite": "vite",
+    "dev:electron": "wait-on http://localhost:5173 && electron .",
+    "dev": "concurrently \"npm run dev:vite\" \"npm run dev:electron\"",
+    "build:renderer": "vite build",
+    "dist": "npm run build:renderer && electron-builder --win --dir",
+    "dist:portable": "npm run build:renderer && electron-builder --win",
+    "dist:zip": "npm run dist && powershell Compress-Archive -Path dist_electron/win-unpacked/* -DestinationPath dist_electron/ExternalSortVisualizer.zip -Force",
+    "test": "echo \"No tests\" && exit 0"
+  },
+  "keywords": ["external-sort", "visualizer", "electron"],
+  "author": "ExtSort Visualizer",
+  "license": "MIT",
+  "description": "Desktop app to visualize the External Merge Sort algorithm (IO-aware page-based model)",
+  "build": {
+    "appId": "com.extsort.visualizer",
+    "productName": "External Sort Visualizer",
+    "directories": {
+      "output": "dist_electron"
+    },
+    "files": [
+      "main/**/*",
+      "preload/**/*",
+      "algorithms/**/*",
+      "renderer/dist/**/*",
+      "assets/**/*"
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "assets/icon.png",
+      "signtoolOptions": null
+    },
+    "portable": {
+      "artifactName": "ExternalSortVisualizer.exe"
+    }
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.4",
+    "concurrently": "^9.2.1",
+    "electron": "^40.6.1",
+    "electron-builder": "^26.8.1",
+    "vite": "^7.3.1",
+    "wait-on": "^9.0.4"
+  },
+  "dependencies": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  }
+}
